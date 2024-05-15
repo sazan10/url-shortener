@@ -8,7 +8,8 @@ async function handleGenerateNewShortUrl(req, res){
         return res.status(400).json({msg:"Shortid and redirectURl are required!"})
     }
     await URL.create({shortId:shortId, redirectUrl:body.url, visitHistory:[]});
-    res.json({id:shortId});
+    // res.json({id:shortId});
+    res.render("home",{shortId})
 }
 
 module.exports = {handleGenerateNewShortUrl};

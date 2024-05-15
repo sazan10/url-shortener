@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>URL Shortener</h1>
+    <% if (locals.shortId) { %>
+        <h3>Generated url: http://localhost:3001/url/<%= shortId%></h3>
+    <%} %>
+    <form method="post" action="/url">
+        <label>Generate new short url: </label>
+        <input type="text" name="url"/>
+        <button type="submit">Generate</button>
+    </form>
+    <% if (users.length>1) { %>
+    <br>
+    <table>
+        <th>SN</th>
+        <th>Short url</th>
+        <th>Redirect Url</th>
+        <th>Visits</th>
+        <% users.forEach((user,index)=>{ %>
+            <tr>
+                <td><%= index+1 %></td>
+                <td><%= user.shortId %></td>
+                <td><%= user.redirectUrl %></td>
+                <td><%= user.visitHistory.length %></td>
+            </tr>
+            <% }) %>
+    </table><% } %>
+</body>
+</html>
