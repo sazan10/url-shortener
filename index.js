@@ -3,6 +3,7 @@ const path = require("path");
 const { connectToMongoDB } = require("./connection.js");
 const PORT = 3001;
 const urlRoute = require("./routes/url.js");
+const userRoute = require("./routes/user.js");
 const staticRoute = require("./routes/staticRouter.js");
 
 const app = express();
@@ -32,4 +33,5 @@ app.get("/test",async (req,res)=>{
     return res.render('home',{urls:allUrls});
 })
 app.use("/",staticRoute);
+app.use("/user", userRoute);
 app.listen(PORT,()=>console.log("Server started"));
