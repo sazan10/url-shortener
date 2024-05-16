@@ -16,7 +16,7 @@ async function handleUserSignup(req, res){
 
 async function handleUserLogin(req, res){
     const user = req.body;
-    const sessionId = uuidv4();
+    // const sessionId = uuidv4();
     if(!user || !user.email ||  !user.password){
       return  res.render("login")
     }
@@ -27,8 +27,9 @@ async function handleUserLogin(req, res){
         return res.render("login");
     }
     console.log("found user",foundUser);
-    setUser(sessionId, foundUser);
-    res.cookie("uid",sessionId);
+    // setUser(sessionId, foundUser);
+    const token = setUser(foundUser);
+    res.cookie("uid",token);
 
     console.log('should go to home')
     return res.redirect("/")
