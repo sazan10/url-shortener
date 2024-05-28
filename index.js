@@ -9,7 +9,7 @@ const cookieParser = require("cookie-parser");
 
 const app = express();
 const URL = require("./models/url.js");
-const { restrictToLoggedInUsersOnly, checkAuth } = require("./middlewares/auth.js");
+const { restrictToLoggedInUsersOnly, checkAuth, restrictTo } = require("./middlewares/auth.js");
 connectToMongoDB("mongodb://127.0.0.1:27017/short-url")
 .then(()=>console.log("MongoDB connected"))
 .catch((error)=>console.log("Mongo error", error));
@@ -19,7 +19,8 @@ app.set("views", path.resolve("./views"));
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
 app.use(cookieParser());
-app.use("/url",restrictToLoggedInUsersOnly,urlRoute);
+app.use(checkAuth);
+app.use("/url", restrictTo(["NORMAL","ADMIN"]),urlRoute);
 app.get("/url/:shortId",async (req,res)=>{
     const shortId = req.params.shortId;
     const entry = await URL.findOneAndUpdate({

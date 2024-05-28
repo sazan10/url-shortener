@@ -9,7 +9,8 @@ async function handleUserSignup(req, res){
    await USER.create({
         name: user.name,
         email: user.email,
-        password:user.password
+        password:user.password,
+        role: "NORMAL"
     });
     return res.redirect("/login");
 }
