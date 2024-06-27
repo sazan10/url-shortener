@@ -4,10 +4,14 @@ const URL= require("../models/url");
 const { restrictTo } = require("../middlewares/auth");
 router.get("/",async (req,res)=>{
     if(!req.user) return res.redirect("/login");
+    try{
     const allUrls = await URL.find({createdBy:req.user._id});
     console.log('all users', allUrls);
     return res.render("home",{urls: allUrls});
-
+    }
+    catch(e){
+        
+    }
     // res.render("login");
 })
 
